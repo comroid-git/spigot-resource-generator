@@ -1,0 +1,17 @@
+*.*
+!.gitignore
+
+# ide environment
+!.run/
+!.run/**.run.xml
+
+# gradle environment
+!gradle/wrapper/**
+!gradle.properties
+!settings.gradle
+!build.gradle
+!gradlew.bat
+!gradlew
+
+# configuration files
+!lombok.config
