@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.comroid:japi:+'
+    implementation 'org.comroid:japi:2.3.+'
     implementation 'org.jetbrains:annotations:24.+'
     implementation 'org.yaml:snakeyaml:2.+'
     implementation 'de.undercouch:gradle-download-task:5.5.+'

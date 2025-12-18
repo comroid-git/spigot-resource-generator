@@ -28,6 +28,8 @@ class SpigotResourceGeneratorPlugin implements Plugin<Project> {
         var task = tasks.register("generateSpigotResourceClasses", GenerateSpigotResourceClassesTask).get().configure {
             it.group = 'build'
             it.description = 'Generates Resource Accessors for Spigot plugin.yml and other resources'
+
+            it.pluginYml.convention(new File("$project.parent.projectDir/src/spigot/main/resources/plugin.yml"))
         }
         tasks.named('compileJava').get().dependsOn task
     }

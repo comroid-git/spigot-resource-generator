@@ -10,6 +10,8 @@ import org.comroid.api.java.gen.JavaSourcecodeWriter
 import org.comroid.api.model.minecraft.model.DefaultPermissionValue
 import org.comroid.api.model.minecraft.model.PluginLoadTime
 import org.gradle.api.DefaultTask
+import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.internal.impldep.org.intellij.lang.annotations.Language
 import org.gradle.internal.impldep.org.intellij.lang.annotations.MagicConstant
@@ -26,15 +28,18 @@ import java.util.stream.Collectors
 import static java.lang.reflect.Modifier.*
 
 abstract class GenerateSpigotResourceClassesTask extends DefaultTask {
+    @Input
+    abstract Property<File> getPluginYml();
+
     private final Set<String> terminalNodes = new HashSet<>()
     private final Set<String> writtenConstants = new HashSet<>()
 
     @TaskAction
     void generate() {
-        def resourceDirectory = "$project.parent.projectDir/src/spigot/main/resources"
-        logger.info("Generating Spigot Resources into source root " + resourceDirectory)
+        def pluginYmlFile = getPluginYml().get()
+        logger.info("Generating PluginYml class from " + pluginYmlFile.absolutePath)
 
-        try (var pluginYml = new FileInputStream(new File(resourceDirectory, "plugin.yml"))) {
+        try (var pluginYml = new FileInputStream(pluginYmlFile)) {
             Map<String, Object> yml = new Yaml().load(pluginYml)
             var main = (String) yml.get("main")
             var lio = main.lastIndexOf('.')
