@@ -7,8 +7,7 @@ import org.gradle.api.tasks.SourceSetContainer
 class SpigotResourceGeneratorPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
-        if (!project.plugins.hasPlugin('java'))
-            throw new IllegalStateException("A java module is required")
+        if (!project.plugins.hasPlugin('java')) throw new IllegalStateException("A java module is required")
 
         project.configurations { c ->
             c.create 'generated'
@@ -29,7 +28,7 @@ class SpigotResourceGeneratorPlugin implements Plugin<Project> {
             it.group = 'build'
             it.description = 'Generates Resource Accessors for Spigot plugin.yml and other resources'
 
-            it.pluginYml.convention(new File("$project.parent.projectDir/src/spigot/main/resources/plugin.yml"))
+            it.pluginYml.convention(new File("${project.parent == null ? project.projectDir : project.parent.projectDir}/src/spigot/main/resources/plugin.yml"))
         }
         tasks.named('compileJava').get().dependsOn task
     }
